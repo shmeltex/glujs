@@ -13,5 +13,36 @@ glu.regAdapter('displayfield', {
             control.setValue(value);
             control.value = control.getValue();
         }
+    },
+    /**
+     * @cfg {Boolean/String} tooltip
+     * *One-way binding*
+     * Updates the tooltip of the field.
+     */
+    tooltipBindings:{
+        setComponentProperty:function (newValue, oldValue, options, control) {
+            if (newValue !== oldValue) {
+                control.tip.update(newValue);
+            }
+        },
+        onInit:function (binding, control) {
+            //initialize with proper valid markings--must be done AFTER RENDER...
+            control.on('render', function () {
+                if(control.tip == null) {
+                    control.tip = Ext.create('Ext.tip.ToolTip', {
+                        target: control.getEl(),
+                        html: control.tooltip
+                    });
+                }
+            }, this, {
+                single: true
+            });
+            control.on('render', function () {
+                //AND after it has REALLY rendered
+                glu.provider.adapters.displayfield.tooltipBindings.setComponentProperty(control.tooltip, '', {}, control);
+            }, this, {
+                delay: 1
+            });
+        }
     }
 });
