@@ -99,6 +99,7 @@ Ext.apply(glu.provider, {
             this.vm = vm;
             //5: Add activate binding (in case it is a tab. This would be handled by a higher level view model if this wasn't the root')...
             this.on('activate', vm.activate, vm);
+            this.on('deactivate', vm.deactivate, vm);
             //6: Apply bindings list to the created control
             glu.provider.binder.applyBindingsList(bindings);
         };
