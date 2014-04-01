@@ -71,11 +71,12 @@ glu.regAdapter('combo', {
             }, control);
         }
 
-
-        control.addListener('change', function(t, e, o) {
-            control.delayedEvent.delay(control.keyDelay || 100);
-            //give some time for multiple keypresses...
-        }, control);
+        if(!control.typeAhead) {
+            control.addListener('change', function(t, e, o) {
+                control.delayedEvent.delay(control.keyDelay || 100);
+                //give some time for multiple keypresses...
+            }, control);
+        }
 
         control.addListener('select', function(t, e, o) {
             control.delayedEvent.delay(control.keyDelay || 100);
